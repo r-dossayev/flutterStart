@@ -47,6 +47,7 @@ class _TestWidgetState extends State<TestWidget> {
               '122222',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            FloatingActionButton(onPressed: _goHome, child: const Icon(Icons.plus_one),)
           ],
         ),
       ),
