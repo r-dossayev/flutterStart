@@ -1,3 +1,4 @@
+import 'package:first_app_flutter/result_bmi.dart';
 import 'package:flutter/material.dart';
 import 'package:first_app_flutter/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -96,7 +97,7 @@ class _InputPageState extends State<InputPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Icon(
-                        FontAwesomeIcons.mars,
+                        FontAwesomeIcons.venus,
                         size: 100,
                       ),
                       SizedBox(
@@ -135,9 +136,82 @@ class _InputPageState extends State<InputPage> {
           Expanded(
             child: Row(
               children: <Widget>[
-                Expanded(child: ReusableCard()),
-                Expanded(child: ReusableCard())
+                Expanded(
+                    child: ReusableCard(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                         Text("WEIGHT", style: kBodyTextStyle,),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            weight.toString(),
+                            style: kNumberTextStyle,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              RawMaterialButton(onPressed: (){setState(() {
+                                weight++;
+                              });}, child: Icon(FontAwesomeIcons.plus),
+                                shape: CircleBorder(),fillColor: kActiveCardColour,
+                                padding: EdgeInsets.all(15),elevation: 10,),
+                              MaterialButton(onPressed: (){setState(() {
+                                weight--;
+                              });}, child: Icon(FontAwesomeIcons.minus),
+                                shape: CircleBorder(),color: kActiveCardColour,
+                                padding: EdgeInsets.all(15),elevation: 10,),
+                            ],
+                          )
+                        ],
+                      ),
+                    )),
+                Expanded(
+                    child: ReusableCard(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text("AGE", style: kBodyTextStyle,),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            age.toString(),
+                            style: kNumberTextStyle,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              RawMaterialButton(onPressed: (){setState(() {
+                                age++;
+                              });}, child: Icon(FontAwesomeIcons.plus),
+                                shape: CircleBorder(),fillColor: kActiveCardColour,
+                                padding: EdgeInsets.all(15),elevation: 10,),
+                              MaterialButton(onPressed: (){setState(() {
+                                age--;
+                              });}, child: Icon(FontAwesomeIcons.minus),
+                                shape: CircleBorder(),color: kActiveCardColour,
+                                padding: EdgeInsets.all(15),elevation: 10,),
+                            ],
+                          )
+                        ],
+                      ),
+                    )),
               ],
+            ),
+          ),
+          SizedBox(height: 20,),
+          GestureDetector(
+            onTap: (){
+              final heightSqr = height/100;
+              final res  = weight/(heightSqr *heightSqr);
+              Navigator.push(context,MaterialPageRoute(builder: (context)=>ResultPage( bmi: res.toString(),)));
+            },
+            child: Container(
+              height: 40,
+              color: kBottomContainerColour,
+              child: Center(child: Text("CALCULATE MY BMI", style: kLargeButtonTextStyle,),),
             ),
           ),
         ],
@@ -167,7 +241,7 @@ class ReusableCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
           child: child,
-          margin: EdgeInsets.all(10),
+          margin: EdgeInsets.all(2),
           decoration: BoxDecoration(
             color: color,
             borderRadius: BorderRadius.all(Radius.circular(10)),
